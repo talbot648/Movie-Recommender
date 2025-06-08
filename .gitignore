@@ -1,4 +1,5 @@
 ## The following files are ignored by Git
 
 ## ignnore raw data files in this folder
-/data
+*csv
+config.ini
