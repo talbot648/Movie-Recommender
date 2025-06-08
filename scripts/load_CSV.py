@@ -16,3 +16,16 @@ postgres_host = config.get('postgres','host')
 postgres_port = config.get('postgres','port')
 
 print(f'The username is "{postgres_username}" and the database is "{postgres_database}"')
+
+# we can programmatically create the connection string using the URL class from SQLAlchemy.
+conn_string = URL.create(
+        "postgresql+psycopg2",
+        username=postgres_username,
+        password=postgres_password,
+        host=postgres_host,
+        port=int(postgres_port),
+        database=postgres_database,
+    )
+
+### what happens when I print this connection string??? I have embedded password information in it, but it will not expose the entire password - programming the key card in the hotel! 
+print(conn_string)
