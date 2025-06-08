@@ -65,7 +65,7 @@ def test_connectionString():
         assert True  # Connection string matches expected format
     else:
         print(f"Connection string does not match expected: {connectionString}")
-        assert False
+        assert False # Connection string does not match expected format
 
 def test_establish_connection():
     config = configparser.ConfigParser()
@@ -93,5 +93,5 @@ def test_establish_connection():
         assert True  # Connection established successfully
     except Exception as err:
         print(f"Failed to establish connection: {err}")
-        assert False
+        assert False # Connection failed
             
