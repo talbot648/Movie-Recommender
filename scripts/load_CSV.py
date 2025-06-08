@@ -27,5 +27,3 @@ conn_string = URL.create(
         database=postgres_database,
     )
 
-### what happens when I print this connection string??? I have embedded password information in it, but it will not expose the entire password - programming the key card in the hotel! 
-print(conn_string)

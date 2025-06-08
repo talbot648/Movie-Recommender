@@ -2,6 +2,7 @@ import configparser
 import psycopg2
 import pytest   
 from sqlalchemy import URL
+from sqlalchemy import create_engine
 
 def test_config_loading():
     config = configparser.ConfigParser()
@@ -34,8 +35,8 @@ def test_postgres_connection():
         )
         connection.close()
         assert True  # Connection successful
-    except Exception as e:
-        print(f"Connection failed: {e}")
+    except Exception as err:
+        print(f"Connection failed: {err}")
         assert False
 
 def test_connectionString():
@@ -65,4 +66,32 @@ def test_connectionString():
     else:
         print(f"Connection string does not match expected: {connectionString}")
         assert False
+
+def test_establish_connection():
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+
+    postgres_username = config.get('postgres', 'username')
+    postgres_password = config.get('postgres', 'password')
+    postgres_database = config.get('postgres', 'db')
+    postgres_host = config.get('postgres', 'host')
+    postgres_port = config.get('postgres', 'port')
     
+    connectionString = URL.create(
+        "postgresql+psycopg2",
+        username=postgres_username,
+        password=postgres_password,
+        host=postgres_host,
+        port=int(postgres_port),
+        database=postgres_database,
+    )
+
+    engine = create_engine(connectionString)
+    try:
+        engine.connect()
+        print("Connection established successfully.")
+        assert True  # Connection established successfully
+    except Exception as err:
+        print(f"Failed to establish connection: {err}")
+        assert False
+            
