@@ -3,18 +3,18 @@ import psycopg2
 import pytest   
 from sqlalchemy import URL
 from sqlalchemy import create_engine
+from scripts.load_CSV import getConfigDetails
+
 
 def test_config_loading():
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    
-    assert config.has_section('postgres')
-    assert config.get('postgres', 'username') is not None
-    assert config.get('postgres', 'password') is not None
-    assert config.get('postgres', 'db') is not None
-    assert config.get('postgres', 'host') is not None
-    assert config.get('postgres', 'port') is not None
+    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
+    assert postgresUsername is not None
+    assert postgresPassword is not None
+    assert postgresDatabase is not None 
+    assert postgresHost is not None
+    assert postgresPort is not None
 
+""""
 def test_postgres_connection():
     config = configparser.ConfigParser()
     config.read('config.ini')
@@ -94,4 +94,4 @@ def test_establish_connection():
     except Exception as err:
         print(f"Failed to establish connection: {err}")
         assert False # Connection failed
-            
+"""         

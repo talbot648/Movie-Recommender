@@ -5,20 +5,25 @@ import numpy as np
 from sqlalchemy import create_engine, URL, text
 
 
-config = configparser.ConfigParser()
 
-config.read('config.ini')
 
-postgres_username = config.get('postgres','username')
-postgres_password = config.get('postgres','password')
-postgres_database = config.get('postgres','db')
-postgres_host = config.get('postgres','host')
-postgres_port = config.get('postgres','port')
+def getConfigDetails():
+    config = configparser.ConfigParser()
+    config.read('scripts/config.ini')
+    postgresUsername = config.get('postgres','username')
+    postgresPassword = config.get('postgres','password')
+    postgresDatabase = config.get('postgres','db')
+    postgresHost = config.get('postgres','host')
+    postgresPort = config.get('postgres','port')
 
-print(f'The username is "{postgres_username}" and the database is "{postgres_database}"')
+    print(f'The username is "{postgresUsername}" and the database is "{postgresDatabase}"')
 
+    return postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort
+
+
+""""
 # we can programmatically create the connection string using the URL class from SQLAlchemy.
-conn_string = URL.create(
+connectionString = URL.create(
         "postgresql+psycopg2",
         username=postgres_username,
         password=postgres_password,
@@ -27,3 +32,9 @@ conn_string = URL.create(
         database=postgres_database,
     )
 
+engine = create_engine(connectionString)
+connection = engine.connect()
+
+"""
+
+getConfigDetails()

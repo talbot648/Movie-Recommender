@@ -3,3 +3,5 @@
 ## ignnore raw data files in this folder
 *csv
 config.ini
+__init__.py
+__pycache__/
