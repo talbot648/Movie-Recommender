@@ -4,7 +4,11 @@ import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine, URL, text
 
+def main():
 
+    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
+    connectionString = getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort)
+    engine = createEngine(connectionString)
 
 
 def getConfigDetails():
@@ -21,20 +25,25 @@ def getConfigDetails():
     return postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort
 
 
-""""
+def getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort):
 # we can programmatically create the connection string using the URL class from SQLAlchemy.
-connectionString = URL.create(
+    connectionString = URL.create(
         "postgresql+psycopg2",
-        username=postgres_username,
-        password=postgres_password,
-        host=postgres_host,
-        port=int(postgres_port),
-        database=postgres_database,
+        username=postgresUsername,
+        password=postgresPassword,
+        host=postgresHost,
+        port=int(postgresPort),
+        database=postgresDatabase,
     )
+    print(f'The connection string is "{connectionString}"')
+    return connectionString
 
-engine = create_engine(connectionString)
-connection = engine.connect()
+def createEngine(connectionString):
+    # Create an engine instance
+    engine = create_engine(connectionString)
+    print(f'engine: "{engine}"')
+    return engine
 
-"""
+ 
 
-getConfigDetails()
+main()

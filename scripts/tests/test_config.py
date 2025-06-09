@@ -3,7 +3,7 @@ import psycopg2
 import pytest   
 from sqlalchemy import URL
 from sqlalchemy import create_engine
-from scripts.load_CSV import getConfigDetails
+from scripts.load_CSV import getConfigDetails, getConnectionString, createEngine
 
 
 def test_config_loading():
@@ -14,24 +14,17 @@ def test_config_loading():
     assert postgresHost is not None
     assert postgresPort is not None
 
-""""
+
 def test_postgres_connection():
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    
-    postgres_username = config.get('postgres', 'username')
-    postgres_password = config.get('postgres', 'password')
-    postgres_database = config.get('postgres', 'db')
-    postgres_host = config.get('postgres', 'host')
-    postgres_port = config.get('postgres', 'port')
+    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
 
     try:
         connection = psycopg2.connect(
-            dbname=postgres_database,
-            user=postgres_username,
-            password=postgres_password,
-            host=postgres_host,
-            port=postgres_port
+            dbname=postgresDatabase,
+            user=postgresUsername,
+            password=postgresPassword,
+            host=postgresHost,
+            port=postgresPort
         )
         connection.close()
         assert True  # Connection successful
@@ -39,26 +32,13 @@ def test_postgres_connection():
         print(f"Connection failed: {err}")
         assert False
 
+
+
 def test_connectionString():
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-
-    postgres_username = config.get('postgres', 'username')
-    postgres_password = config.get('postgres', 'password')
-    postgres_database = config.get('postgres', 'db')
-    postgres_host = config.get('postgres', 'host')
-    postgres_port = config.get('postgres', 'port')
+    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
     
-    connectionString = URL.create(
-        "postgresql+psycopg2",
-        username=postgres_username,
-        password=postgres_password,
-        host=postgres_host,
-        port=int(postgres_port),
-        database=postgres_database,
-    )
+    connectionString = str(getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort))
 
-    connectionString = str(connectionString)
     want = "postgresql+psycopg2://postgres:***@localhost:5432/Movie-data"
 
     if connectionString == want :
@@ -67,31 +47,18 @@ def test_connectionString():
         print(f"Connection string does not match expected: {connectionString}")
         assert False # Connection string does not match expected format
 
+
+
 def test_establish_connection():
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-
-    postgres_username = config.get('postgres', 'username')
-    postgres_password = config.get('postgres', 'password')
-    postgres_database = config.get('postgres', 'db')
-    postgres_host = config.get('postgres', 'host')
-    postgres_port = config.get('postgres', 'port')
+    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
     
-    connectionString = URL.create(
-        "postgresql+psycopg2",
-        username=postgres_username,
-        password=postgres_password,
-        host=postgres_host,
-        port=int(postgres_port),
-        database=postgres_database,
-    )
+    connectionString = getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort)
 
-    engine = create_engine(connectionString)
+    engine = createEngine(connectionString)
     try:
         engine.connect()
         print("Connection established successfully.")
         assert True  # Connection established successfully
     except Exception as err:
         print(f"Failed to establish connection: {err}")
-        assert False # Connection failed
-"""         
+        assert False # Connection failed      
