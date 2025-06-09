@@ -1,9 +1,8 @@
-import configparser
 import psycopg2
 import pytest   
 from sqlalchemy import URL
-from sqlalchemy import create_engine
-from scripts.load_CSV import getConfigDetails, getConnectionString, createEngine
+from sqlalchemy import create_engine, Connection, text
+from scripts.load_CSV import getConfigDetails, getConnectionString, createEngine, establishConnection
 
 
 def test_config_loading():
@@ -53,12 +52,34 @@ def test_establish_connection():
     postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
     
     connectionString = getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort)
+    connection = None
 
     engine = createEngine(connectionString)
     try:
-        engine.connect()
+        connection = establishConnection(engine)
+        assert connection is not None  
+        assert isinstance(connection, Connection)  
         print("Connection established successfully.")
-        assert True  # Connection established successfully
-    except Exception as err:
-        print(f"Failed to establish connection: {err}")
-        assert False # Connection failed      
+    finally:
+            connection.close() 
+
+def test_executeQuery():
+    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
+    
+    connectionString = getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort)
+    engine = createEngine(connectionString)
+    connection = establishConnection(engine)
+
+    want = [(1, 1, 'Hello, World')]
+    query = text('SELECT * FROM dbo.test;')
+
+    result = connection.execute(query)
+    rows = result.all()
+
+    if rows == want:
+        assert True
+        print("Query executed successfully and returned expected results.")
+    else:
+        print(f"Expected {want} but got {rows}")
+        assert False        
+    connection.close()  # Ensure the connection is closed after the test

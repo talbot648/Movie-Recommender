@@ -9,6 +9,10 @@ def main():
     postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
     connectionString = getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort)
     engine = createEngine(connectionString)
+    connection = establishConnection(engine)
+    print(connection)
+
+
 
 
 def getConfigDetails():
@@ -44,6 +48,11 @@ def createEngine(connectionString):
     print(f'engine: "{engine}"')
     return engine
 
- 
+def establishConnection(engine):
+    return engine.connect()
+
+
+  
+
 
 main()
