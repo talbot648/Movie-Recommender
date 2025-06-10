@@ -11,7 +11,7 @@ def main():
     engine = createEngine(connectionString)
     connection = establishConnection(engine)
     print(connection)
-    uploadCSVToTable('links_small', 'data/links_small.csv', connection,'dbo')
+    uploadCSVToTable('movies_metadata', 'data/movies_metadata.csv', connection,'dbo')
 
 
 
@@ -60,10 +60,13 @@ def uploadCSVToTable(tableName, csvFilePath, connection, schema):
 
     print(f'Data from {csvFilePath} uploaded to {schema}.{tableName} successfully.')
 
+    preview_df = pd.read_sql(f'SELECT * FROM "{schema}"."{tableName}" LIMIT 5;', con=connection)
+    print("Sample rows from the table:")
+    print(preview_df)
 
 
 
 
   
-
+main()
 
