@@ -1,6 +1,6 @@
 ## The following files are ignored by Git
 
-## ignnore raw data files in this folder
+
 *csv
 config.ini
 __init__.py

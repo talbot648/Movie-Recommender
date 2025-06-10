@@ -1,8 +1,8 @@
 import psycopg2
 import pytest   
 from sqlalchemy import URL
-from sqlalchemy import create_engine, Connection, text
-from scripts.load_CSV import getConfigDetails, getConnectionString, createEngine, establishConnection
+from sqlalchemy import Connection, text
+from scripts.load_CSV import getConfigDetails, getConnectionString, createEngine, establishConnection, uploadCSVToTable
 
 
 def test_config_loading():
@@ -83,3 +83,30 @@ def test_executeQuery():
         print(f"Expected {want} but got {rows}")
         assert False        
     connection.close()  # Ensure the connection is closed after the test
+
+def test_uploadCSVToTable():
+    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
+    
+    connectionString = getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort)
+    engine = createEngine(connectionString)
+    connection = establishConnection(engine)
+
+    uploadCSVToTable('test', 'data/test.csv', connection, 'test')
+
+    
+    query = text('SELECT * FROM test.test LIMIT 1;')
+    result = connection.execute(query)
+
+    want = [('Charlie', 21, "'Hello World'")]
+    got = result.all()
+
+
+    if got == want:
+        assert True
+        print("CSV uploaded successfully and data matches expected.")
+    else:
+        print(f"Expected {want} but got {got}")
+        print(want, got)
+        assert False
+    connection.close()  # Ensure the connection is closed after the test
+    

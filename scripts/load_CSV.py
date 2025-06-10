@@ -11,7 +11,7 @@ def main():
     engine = createEngine(connectionString)
     connection = establishConnection(engine)
     print(connection)
-
+    uploadCSVToTable('links_small', 'data/links_small.csv', connection,'dbo')
 
 
 
@@ -51,8 +51,19 @@ def createEngine(connectionString):
 def establishConnection(engine):
     return engine.connect()
 
+def uploadCSVToTable(tableName, csvFilePath, connection, schema):
+    df = pd.read_csv(csvFilePath)
+
+
+    df = df.replace({np.nan: None})
+    df.to_sql(tableName, con=connection, if_exists='replace', index=False, schema=schema)
+
+    print(f'Data from {csvFilePath} uploaded to {schema}.{tableName} successfully.')
+
+
+
+
 
   
 
 
-main()
