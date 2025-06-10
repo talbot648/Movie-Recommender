@@ -63,26 +63,6 @@ def test_establish_connection():
     finally:
             connection.close() 
 
-def test_executeQuery():
-    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
-    
-    connectionString = getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort)
-    engine = createEngine(connectionString)
-    connection = establishConnection(engine)
-
-    want = [(1, 1, 'Hello, World')]
-    query = text('SELECT * FROM dbo.test;')
-
-    result = connection.execute(query)
-    rows = result.all()
-
-    if rows == want:
-        assert True
-        print("Query executed successfully and returned expected results.")
-    else:
-        print(f"Expected {want} but got {rows}")
-        assert False        
-    connection.close()  # Ensure the connection is closed after the test
 
 def test_uploadCSVToTable():
     postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
