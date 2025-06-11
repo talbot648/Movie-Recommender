@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <h1>Movie Recommendation Tool Project</h1>
-      <h2>Hi Kia</h2>
+      
     </>
   )
 }
