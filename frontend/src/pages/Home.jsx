@@ -1,11 +1,12 @@
+import '../css/Home.css'
 
 
-
-function Home() {
+const Home = () => {
 
 return (
-    <>
-<h1>Movie Recommendation Tool Project: Home</h1>
+<>
+<h1>Movie Recommendation Tool Project</h1>
+
 
 </>
 )}

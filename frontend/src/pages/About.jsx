@@ -1,11 +1,11 @@
 
 
 
-function About() {
+const About = () => {
 
 return (
-    <>
-<h1>Movie Recommendation Tool Project: About</h1>
+<>
+<h1>About</h1>
 
 </>
 )}
