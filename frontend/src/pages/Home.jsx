@@ -5,7 +5,7 @@ const Home = () => {
 
 return (
 <>
-<h1>Movie Recommendation Tool Project</h1>
+<h1>Movie Recommendor</h1>
 
 
 </>
