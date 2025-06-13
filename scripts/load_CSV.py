@@ -63,6 +63,7 @@ def uploadCSVToTable(tableName, csvFilePath, connection, schema):
     preview_df = pd.read_sql(f'SELECT * FROM "{schema}"."{tableName}" LIMIT 5;', con=connection)
     print("Sample rows from the table:")
     print(preview_df)
+    connection.close()
 
 
 
