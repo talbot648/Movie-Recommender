@@ -19,3 +19,7 @@
 .navbar .nav-link:hover {
     color: #FAF9F6;
 }
+
+.navbar .nav-link.active {
+    color: #FAF9F6;
+}

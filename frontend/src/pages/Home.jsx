@@ -5,7 +5,11 @@ const Home = () => {
 
 return (
 <>
-<h1>Movie Recommendor</h1>
+<div className="home-background">
+<div className="home-container">
+<h1>Find Movies You'll Love</h1>
+</div>
+</div>
 
 
 </>

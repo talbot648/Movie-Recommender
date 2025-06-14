@@ -4,3 +4,9 @@ h1 {
       font-family: 'Poppins', sans-serif;
 
 }
+
+.home-background {
+    height: 400px;
+    background-color: rgb(240, 236, 236);
+}
+

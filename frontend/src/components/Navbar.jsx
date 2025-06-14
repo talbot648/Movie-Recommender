@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import '../css/navbar.css';
 
 const Navbar = () => {
@@ -6,23 +6,23 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg">
         <div className="container">
-          <Link className="navbar-brand" to="/">My Website</Link>
+          <NavLink className="navbar-brand" to="/">My Website</NavLink>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to="/">Home</Link>
+                <NavLink className="nav-link" to="/">Home</NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/About">About</Link>
+                <NavLink className="nav-link" to="/About">About</NavLink>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-      <div className="container">
+      <div className="home-container">
         <Outlet />
       </div>
     </>
