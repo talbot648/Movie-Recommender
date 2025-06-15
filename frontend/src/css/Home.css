@@ -1,12 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 
-h1 {
-      font-family: 'Poppins', sans-serif;
 
-}
+
 
 .home-background {
-    height: 400px;
-    background-color: rgb(240, 236, 236);
+    height: 100vh;
+    background: linear-gradient(to bottom, #f5f3ef, #fcc5c5);
+
+
+
+
 }
 
+.home-background h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    padding-top: 200px;
+}
+
+.home-background p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.home-content-container {
+    height: 100vh;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
