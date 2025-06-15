@@ -1,0 +1,22 @@
+
+.slick-prev:before,
+.slick-next:before {
+    color: rgb(0, 0, 0) !important;          
+    font-size: 30px;       
+    opacity: 1;           
+}
+
+.slick-prev {
+  left: 20px;            
+  z-index: 1;
+}
+
+.slick-next {
+    right: 20px;           
+    z-index: 1;
+}
+
+.slick-prev:hover:before,
+.slick-next:hover:before {
+    color: #A7C7E7 !important;        
+}
