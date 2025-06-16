@@ -4,7 +4,7 @@ import FilmCard from "./FilmCard";
 import '../css/carousel.css'; // Import custom styles for the carousel
 
 const MovieCarousel = ({ movies }) => {
-  const settings = {
+  const sliderBehaviour = {
     dots: false,
     infinite: false,
     speed: 500,
@@ -15,7 +15,7 @@ const MovieCarousel = ({ movies }) => {
 
   return (
     <div className="container">
-      <Slider {...settings}>
+      <Slider {...sliderBehaviour}>
         {movies.map((movie, idx) => (
           <div key={idx}>
             <FilmCard
