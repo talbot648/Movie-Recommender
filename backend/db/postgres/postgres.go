@@ -1,7 +1,9 @@
 package postgres
 
 import (
+	"Movie/db" // Assuming db is the package where TopMovies struct is defined
 	"database/sql"
+	"errors"
 	"fmt"
 
 	_ "github.com/lib/pq" // PostgreSQL driver
@@ -43,4 +45,26 @@ func GetDBConnectionString(path string) (string, error) {
 		host, port, user, password, database, sslmode)
 
 	return connectionString, nil
+}
+
+func GetTopMovies() ([]db.TopMovies, error) {
+	rows, err := DB.Query("SELECT film_name, average_rating, total_votes FROM top_films")
+
+	if err != nil {
+		fmt.Println("failed to query the databse", err)
+		return []db.TopMovies{}, errors.New("Database could not be queried")
+	}
+	defer rows.Close()
+
+	topMovies := []db.TopMovies{}
+
+	for rows.Next() {
+		var movie db.TopMovies
+		if err := rows.Scan(&movie.FilmName, &movie.AverageRating, &movie.TotalVotes); err != nil {
+			fmt.Println("failed to scan row", err)
+			return []db.TopMovies{}, errors.New("Database could not be queried")
+		}
+		topMovies = append(topMovies, movie)
+	}
+	return topMovies, nil
 }

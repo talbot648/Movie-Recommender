@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Movie/db"          // Assuming db is a package that contains the TopMovies struct and GetTopMovies function
+	// Assuming db is a package that contains the TopMovies struct and GetTopMovies function
 	"Movie/db/postgres" // Assuming postgres is a package that initializes the database connection
 	"encoding/json"
 	"fmt"
@@ -46,7 +46,11 @@ func getTopMovies(writer http.ResponseWriter, request *http.Request) {
 
 	fmt.Printf("got /api/topMovies request\n")
 
-	topMovies := db.GetTopMovies() // Assuming db.GetTopMovies() returns a slice of TopMovies
+	topMovies, errMovie := postgres.GetTopMovies() // Assuming db.GetTopMovies() returns a slice of TopMovies
+	if errMovie != nil {
+		http.Error(writer, "Error getting movies", http.StatusInternalServerError)
+		return
+	}
 
 	topMoviesJSON, errMarshal := json.Marshal(topMovies)
 	if errMarshal != nil {
