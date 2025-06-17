@@ -19,9 +19,9 @@ const MovieCarousel = ({ movies }) => {
         {movies.map((movie, idx) => (
           <div key={idx}>
             <FilmCard
-              filmTitle={movie.title}
-              AverageRating={movie.rating}
-              totalVotes={movie.votes}
+              filmName={movie.FilmName}
+              AverageRating={movie.AverageRating}
+              totalVotes={movie.TotalVotes}
             />
           </div>
         ))}

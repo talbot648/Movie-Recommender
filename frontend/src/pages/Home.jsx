@@ -1,19 +1,32 @@
 import InfoBox from '../components/InfoBox';
 import Carousel from '../components/Carousel';
 import '../css/Home.css'
+import { useEffect, useState } from 'react';
 
  
 
 
 const Home = () => {
-      const movies = [
-    { title: 'Inception', rating: 8.8, votes: 2000000 },
-    { title: 'The Dark Knight', rating: 9.0, votes: 2500000 },
-    { title: 'Interstellar', rating: 8.6, votes: 1800000 },
-    { title: 'Tenet', rating: 7.4, votes: 400000 },
-    { title: 'Dunkirk', rating: 7.9, votes: 600000 },
-    { title: 'Memento', rating: 8.4, votes: 1200000 },
-  ];
+    const [Movies, setMovies] = useState([]);
+
+    useEffect(() => {
+    const fetchTopMovies = async () => {
+        try {
+            const response = await fetch("api/topMovies");
+        
+        if (!response.ok){
+            throw new Error('Failed to fetch data')
+        }
+        const data = await response.json();
+        setMovies(data)
+    }   catch (error) {
+        console.error('Error fetching top movies:', error)
+    }
+    };
+
+    fetchTopMovies();
+    },[]);
+
 
 return (
 <>
@@ -39,7 +52,7 @@ return (
 </div>
 <div className='container'>
     <h1>Top Rated Movies</h1>
-    <Carousel movies={movies} />
+    <Carousel movies={Movies} />
 
 </div>
 
