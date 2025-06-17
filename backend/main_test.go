@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"testing"
+	// Assuming postgres is a package that initializes the database connection
 )
 
 func TestRootHandler(t *testing.T) {
