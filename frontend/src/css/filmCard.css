@@ -1,0 +1,16 @@
+.film-card{
+
+  min-width: 250px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #A7C7E7;
+
+
+
+}
+
+.film-card .card-title {
+    font-weight: bold;
+    white-space: nowrap;       /* prevent wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

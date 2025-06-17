@@ -46,7 +46,7 @@ func getTopMovies(writer http.ResponseWriter, request *http.Request) {
 
 	fmt.Printf("got /api/topMovies request\n")
 
-	topMovies, errMovie := postgres.GetTopMovies() // Assuming db.GetTopMovies() returns a slice of TopMovies
+	topMovies, errMovie := postgres.GetTopMovies()
 	if errMovie != nil {
 		http.Error(writer, "Error getting movies", http.StatusInternalServerError)
 		return

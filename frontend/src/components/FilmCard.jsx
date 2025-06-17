@@ -1,8 +1,9 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import '../css/FilmCard.css'
 
 const FilmCard = ({ filmName, AverageRating, totalVotes }) => (
-  <Card className="m-2 shadow-sm" style={{ minWidth: '250px', fontfamily: 'Poppins, sans-serif' }}>
+  <Card className="film-card m-2 shadow-sm">
     <Card.Body className="text-center">
       <Card.Title>{filmName}</Card.Title>
       <Card.Text>⭐ {AverageRating} </Card.Text>
