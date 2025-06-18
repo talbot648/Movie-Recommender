@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 const Home = () => {
     const [Movies, setMovies] = useState([]);
 
+
     useEffect(() => {
     const fetchTopMovies = async () => {
         try {

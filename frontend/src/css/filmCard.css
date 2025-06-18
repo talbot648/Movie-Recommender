@@ -3,6 +3,7 @@
   min-width: 250px;
   font-family: 'Poppins', sans-serif;
   background-color: #A7C7E7;
+  transition: all 0.3s;
 
 
 
@@ -13,4 +14,9 @@
     white-space: nowrap;       /* prevent wrapping */
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.film-card:hover {
+    transform: scale(1.03);
+    opacity: 80%;
 }

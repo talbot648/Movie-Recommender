@@ -1,4 +1,5 @@
-import React from "react";
+import {useState} from "react";  
+import {Modal, Button} from "react-bootstrap"
 import Slider from "react-slick";
 import FilmCard from "./FilmCard";
 import '../css/carousel.css'; // Import custom styles for the carousel
@@ -13,19 +14,44 @@ const MovieCarousel = ({ movies }) => {
     arrows: true
     };
 
+    const [selectedMovie, setSelectedMovie] = useState(null)
+
+    const handleShowModal = (movie) => {
+        setSelectedMovie(movie);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedMovie(null);
+    };
+
   return (
     <div className="container">
       <Slider {...sliderBehaviour}>
-        {movies.map((movie, idx) => (
-          <div key={idx}>
-            <FilmCard
+        {movies.map((movie => (
+          <div key={movie.FilmName}>
+            <FilmCard onClick={() => handleShowModal(movie)}
               filmName={movie.FilmName}
               AverageRating={movie.AverageRating}
               totalVotes={movie.TotalVotes}
             />
           </div>
-        ))}
+        )))}
       </Slider>
+      {}
+      {selectedMovie && (
+        <Modal show={!!selectedMovie} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+            <Modal.Title>{selectedMovie.FilmName}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <p>Rating: {selectedMovie.AverageRating}</p>
+            <p>Votes: {selectedMovie.TotalVotes}</p>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>Close</Button>
+        </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };
