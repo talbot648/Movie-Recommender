@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import '../css/FilmCard.css'
+import '../css/filmCard.css'
 
 const FilmCard = ({ filmName, AverageRating, totalVotes, onClick }) => (
   <Card className="film-card m-2 shadow-sm" onClick={onClick}>
