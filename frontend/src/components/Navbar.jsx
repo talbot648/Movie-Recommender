@@ -6,7 +6,7 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg">
         <div className="container">
-          <NavLink className="navbar-brand" to="/">Talbots</NavLink>
+          <NavLink className="navbar-brand" to="/"></NavLink>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
