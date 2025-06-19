@@ -14,21 +14,34 @@ const MovieCarousel = ({ movies }) => {
     arrows: true
     };
 
-    const [selectedMovie, setSelectedMovie] = useState(null)
+    const [selectedMovieDetails, setSelectedMovieDetails] = useState(null);
 
-    const handleShowModal = (movie) => {
-        setSelectedMovie(movie);
+    const handleShowModal = async (movie) => {
+        try {
+            const response = await fetch (`http://localhost:8080/api/movieDetails?id=${movie.Filmid}`);
+
+            if (!response.ok){
+                throw new Error('Failed to fetch data') 
+            }
+            
+            const data = await response.json();
+            setSelectedMovieDetails(data);
+            }  catch (error) {
+            console.error('Error fetching the movies details:', error)
+            setSelectedMovieDetails(null);
+        }
     };
+        
 
     const handleCloseModal = () => {
-        setSelectedMovie(null);
+        setSelectedMovieDetails(null);
     };
 
   return (
     <div className="container">
       <Slider {...sliderBehaviour}>
         {movies.map((movie => (
-          <div key={movie.FilmName}>
+          <div key={movie.FilmId}>
             <FilmCard onClick={() => handleShowModal(movie)}
               filmName={movie.FilmName}
               AverageRating={movie.AverageRating}
@@ -37,15 +50,16 @@ const MovieCarousel = ({ movies }) => {
           </div>
         )))}
       </Slider>
-      {}
-      {selectedMovie && (
-        <Modal show={!!selectedMovie} onHide={handleCloseModal}>
+      
+      {selectedMovieDetails && (
+        <Modal show={!!selectedMovieDetails} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-            <Modal.Title>{selectedMovie.FilmName}</Modal.Title>
+        <Modal.Title>{selectedMovieDetails.FilmName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <p>Rating: {selectedMovie.AverageRating}</p>
-            <p>Votes: {selectedMovie.TotalVotes}</p>
+            <p>Rating: {selectedMovieDetails.AverageRating}</p>
+            <p>Votes: {selectedMovieDetails.TotalVotes}</p>
+            <p>Overview: {selectedMovieDetails.Overview}</p>
         </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>Close</Button>
