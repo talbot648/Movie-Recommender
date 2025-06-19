@@ -8,7 +8,7 @@ const Footer = () =>{
     <p>© 2025 MovieApp</p>
     <div className="footer-links">
         <a href="/">Home</a>
-      <a href="/about">About</a>
+      <a href="/About">About</a>
       <a href="/Movies">Movies</a>
       
     </div>
