@@ -1,0 +1,38 @@
+
+
+.site-footer {
+    background-color: #A7C7E7;
+    color: #000000;
+    padding: 20px 0;
+    font-size: 14px;
+    margin-top: auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;  font-size: 1em;
+
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  
+}
+
+.footer-links a {
+    color: #363636;
+    margin-left: 15px;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-content p {
+    margin: 0;
+}

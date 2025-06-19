@@ -1,6 +1,8 @@
 import InfoBox from '../components/InfoBox';
 import Carousel from '../components/Carousel';
+import Footer from '../components/Footer';
 import '../css/Home.css'
+import '../css/footer.css'
 import { useEffect, useState } from 'react';
 
  
@@ -58,6 +60,9 @@ return (
     <Carousel movies={Movies} />
 
 </div>
+
+<Footer></Footer>
+
 
 
 </>
