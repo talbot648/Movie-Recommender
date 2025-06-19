@@ -68,3 +68,31 @@ func GetTopMovies() ([]db.TopMovies, error) {
 	}
 	return topMovies, nil
 }
+
+func GetMovieDetails(id int) (db.MovieDetails, error) {
+	var movie db.MovieDetails
+	row := DB.QueryRow(`SELECT id, title, Adult, genres, language, overview, releasedate, voteaverage, votecount
+      FROM cl.movies_metadata
+      WHERE id = $1`, id)
+
+	// Scan into your struct fields
+	err := row.Scan(
+		&movie.Filmid,
+		&movie.FilmName,
+		&movie.Adult,
+		&movie.Genres,
+		&movie.Language,
+		&movie.Overview,
+		&movie.ReleaseDate,
+		&movie.AverageRating,
+		&movie.TotalVotes,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return movie, fmt.Errorf("no movie found with id %d", id)
+		}
+		return movie, fmt.Errorf("query error: %w", err)
+	}
+
+	return movie, nil
+}

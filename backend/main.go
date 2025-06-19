@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 func main() {
@@ -25,6 +26,7 @@ func main() {
 	router := http.NewServeMux()
 	router.HandleFunc("/", rootHandler)
 	router.HandleFunc("/api/topMovies", getTopMovies)
+	router.HandleFunc("/api/movieDetails", getMovieDetails)
 
 	fmt.Println("Server listening on port 8080")
 	err = http.ListenAndServe(":8080", CorsMiddleware(router))
@@ -71,6 +73,38 @@ func getTopMovies(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 
 	_, err := writer.Write([]byte(topMoviesJSON))
+	if err != nil {
+		http.Error(writer, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+}
+
+func getMovieDetails(writer http.ResponseWriter, request *http.Request) {
+	if request.Method != http.MethodGet {
+		http.Error(writer, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	ids := request.URL.Query()["id"]
+	id, _ := strconv.Atoi(ids[0])
+	fmt.Printf("got /api/movieDetails request for id=%d\n", id)
+
+	movieDetails, errMovie := postgres.GetMovieDetails(id)
+	if errMovie != nil {
+		http.Error(writer, "Error getting movie details", http.StatusInternalServerError)
+		fmt.Print(errMovie)
+		return
+	}
+
+	movieDetailsJSON, errMarshal := json.Marshal(movieDetails)
+	if errMarshal != nil {
+		http.Error(writer, "Internal Server Error", http.StatusInternalServerError)
+		return
+
+	}
+	writer.Header().Set("Content-Type", "application/json")
+	_, err := writer.Write([]byte(movieDetailsJSON))
 	if err != nil {
 		http.Error(writer, "Internal Server Error", http.StatusInternalServerError)
 		return

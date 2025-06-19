@@ -1,10 +1,24 @@
 package db
 
+import "time"
+
 type TopMovies struct {
 	Filmid        int
 	FilmName      string
 	AverageRating float64
 	TotalVotes    int
+}
+
+type MovieDetails struct {
+	Filmid        int
+	FilmName      string
+	Adult         bool
+	Genres        string
+	Language      string
+	Overview      string
+	ReleaseDate   time.Time
+	AverageRating float64
+	TotalVotes    float64
 }
 
 var topMovies []TopMovies
