@@ -22,15 +22,24 @@ func main() {
 	}
 	defer postgres.DB.Close()
 
-	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/api/topMovies", getTopMovies)
+	router := http.NewServeMux()
+	router.HandleFunc("/", rootHandler)
+	router.HandleFunc("/api/topMovies", getTopMovies)
 
 	fmt.Println("Server listening on port 8080")
-	err = http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServe(":8080", CorsMiddleware(router))
 	if err != nil {
 		fmt.Println("Error starting server:", err)
 	}
 
+}
+
+func CorsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		writer.Header().Set("Access-Control-Allow-Origin", "*")
+		// Continue with the next handler
+		next.ServeHTTP(writer, request)
+	})
 }
 
 func rootHandler(writer http.ResponseWriter, request *http.Request) {
