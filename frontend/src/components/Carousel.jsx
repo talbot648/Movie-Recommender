@@ -57,11 +57,16 @@ const MovieCarousel = ({ movies }) => {
         <Modal.Title>{selectedMovieDetails.FilmName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+            <p>Overview: {selectedMovieDetails.Overview}</p>
+            <p>IsAdult: {selectedMovieDetails.Adult.toString()}</p>
             <p>Rating: {selectedMovieDetails.AverageRating}</p>
             <p>Votes: {selectedMovieDetails.TotalVotes}</p>
-            <p>Overview: {selectedMovieDetails.Overview}</p>
+            <p>Language: {selectedMovieDetails.Language}</p>
+            <p>Released: {new Date(selectedMovieDetails.ReleaseDate).toLocaleDateString()}</p>
+            
         </Modal.Body>
         <Modal.Footer>
+            
             <Button variant="secondary" onClick={handleCloseModal}>Close</Button>
         </Modal.Footer>
         </Modal>
