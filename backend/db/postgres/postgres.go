@@ -48,7 +48,7 @@ func GetDBConnectionString(path string) (string, error) {
 }
 
 func GetTopMovies() ([]db.TopMovies, error) {
-	rows, err := DB.Query("SELECT film_name, average_rating, total_votes FROM top_films")
+	rows, err := DB.Query("SELECT film_id, film_name, average_rating, total_votes FROM top_films_new")
 
 	if err != nil {
 		fmt.Println("failed to query the databse", err)
@@ -60,7 +60,7 @@ func GetTopMovies() ([]db.TopMovies, error) {
 
 	for rows.Next() {
 		var movie db.TopMovies
-		if err := rows.Scan(&movie.FilmName, &movie.AverageRating, &movie.TotalVotes); err != nil {
+		if err := rows.Scan(&movie.Filmid, &movie.FilmName, &movie.AverageRating, &movie.TotalVotes); err != nil {
 			fmt.Println("failed to scan row", err)
 			return []db.TopMovies{}, errors.New("Database could not be queried")
 		}
