@@ -18,7 +18,7 @@ func main() {
 		log.Fatal("DATABASE_URL is not set")
 		return
 	}
-
+	fmt.Println("Connecting using:", connectionString[:30], "...") // Don't log full password!
 	if err := postgres.InitDB(connectionString); err != nil {
 		fmt.Println("Error initializing database:", err)
 		return
