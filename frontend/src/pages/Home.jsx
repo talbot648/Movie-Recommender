@@ -38,7 +38,7 @@ return (
 <div className="home-background">
 <div className="home-container">
 <h1>Find Movies You'll Love</h1>
-<p>Discover Movies you love with the use of this Movie recommendation tool! </p>
+<p>Discover movies you love with the use of this recommendation tool! </p>
 </div>
 </div>
 <div className="grid-container">
@@ -50,7 +50,7 @@ return (
  />
   <InfoBox
     title = "Movies"
-    description = "Find Your Next Favorite Movie:"
+    description = "Find your next favorite movie:"
     buttonText = "Take Me There"
     buttonLink = "/Movies"
  />
