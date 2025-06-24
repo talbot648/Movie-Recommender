@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS dbo.ratings
+(
+    "userId" bigint,
+    "movieId" bigint,
+    rating double precision,
+    "timestamp" bigint
+)

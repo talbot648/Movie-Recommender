@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS dbo.movies_metadata
+(
+    adult text COLLATE pg_catalog."default",
+    belongs_to_collection text COLLATE pg_catalog."default",
+    budget text COLLATE pg_catalog."default",
+    genres text COLLATE pg_catalog."default",
+    homepage text COLLATE pg_catalog."default",
+    id text COLLATE pg_catalog."default",
+    imdb_id text COLLATE pg_catalog."default",
+    original_language text COLLATE pg_catalog."default",
+    original_title text COLLATE pg_catalog."default",
+    overview text COLLATE pg_catalog."default",
+    popularity text COLLATE pg_catalog."default",
+    poster_path text COLLATE pg_catalog."default",
+    production_companies text COLLATE pg_catalog."default",
+    production_countries text COLLATE pg_catalog."default",
+    release_date text COLLATE pg_catalog."default",
+    revenue text COLLATE pg_catalog."default",
+    runtime text COLLATE pg_catalog."default",
+    spoken_languages text COLLATE pg_catalog."default",
+    status text COLLATE pg_catalog."default",
+    tagline text COLLATE pg_catalog."default",
+    title text COLLATE pg_catalog."default",
+    video boolean,
+    vote_average text COLLATE pg_catalog."default",
+    vote_count text COLLATE pg_catalog."default"
+)

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS dbo.credits
+(
+    "cast" text COLLATE pg_catalog."default",
+    crew text COLLATE pg_catalog."default",
+    id bigint
+)

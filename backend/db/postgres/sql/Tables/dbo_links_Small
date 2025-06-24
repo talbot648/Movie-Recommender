@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS dbo.links_small
+(
+    "movieId" bigint,
+    "imdbId" bigint,
+    "tmdbId" numeric
+)

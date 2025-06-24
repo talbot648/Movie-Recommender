@@ -1,0 +1,16 @@
+CREATE MATERIALIZED VIEW IF NOT EXISTS public.top_films
+TABLESPACE pg_default
+AS
+ SELECT m.id AS film_id,
+    m.title AS film_name,
+    round(avg(r.rating)::numeric, 2) AS average_rating,
+    count(r.rating) AS total_votes
+   FROM dbo.links l
+     LEFT JOIN dbo.ratings r ON r."movieId" = l."movieId"
+     LEFT JOIN cl.movies_metadata m ON m.id = l."movieId"
+  WHERE r.rating IS NOT NULL
+  GROUP BY m.id, m.title
+ HAVING count(r.rating) > 500
+  ORDER BY (round(avg(r.rating)::numeric, 2)) DESC
+ LIMIT 20
+WITH DATA;

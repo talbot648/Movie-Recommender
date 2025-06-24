@@ -1,0 +1,65 @@
+CREATE OR REPLACE PROCEDURE dbo.transform_invalid_metadata(
+	)
+LANGUAGE 'sql'
+AS $BODY$
+DROP PROCEDURE IF EXISTS transform_invalid_metadata;
+
+CREATE PROCEDURE transform_invalid_metadata()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    TRUNCATE cl.movies_metadata;
+
+    INSERT INTO cl.movies_metadata (
+        adult,
+        budget,
+        genres,
+        homepage,
+        id,
+        imdbid,
+        language,
+        overview,
+        popularity,
+        posterpath,
+        productcompany,
+        productcountry,
+        releasedate,
+        revenue,
+        status,
+        title,
+        voteaverage,
+        votecount
+    )
+    SELECT
+        CAST(adult AS BOOLEAN),
+        CAST(budget AS INT),
+        genres,
+        homepage,
+        CAST(id AS INT),
+        imdb_id,
+        original_language,
+        overview,
+        CAST(popularity AS NUMERIC),
+        poster_path,
+        production_companies,
+        production_countries,
+        TO_DATE(release_date, 'YYYY-MM-DD'),
+        CAST(revenue AS NUMERIC),  
+        status,
+        title,
+        CAST(vote_average AS NUMERIC),
+        CAST(vote_count AS NUMERIC)
+    FROM dbo.movies_metadata
+    WHERE
+        adult IN ('True', 'False')
+        AND budget ~ '^\d+$'
+        AND revenue ~ '^\d+(\.0+)?$'
+        AND popularity ~ '^\d*\.?\d+$'
+        AND release_date ~ '^\d{4}-\d{2}-\d{2}$'
+        AND vote_average ~ '^\d*\.?\d+$'
+        AND vote_count ~ '^\d+(\.0+)?$';
+END;
+$$;
+$BODY$;
+ALTER PROCEDURE dbo.transform_invalid_metadata()
+    OWNER TO postgres;

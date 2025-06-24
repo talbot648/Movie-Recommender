@@ -1,0 +1,22 @@
+
+CREATE TABLE IF NOT EXISTS cl.movies_metadata
+(
+    adult boolean,
+    budget integer,
+    genres text COLLATE pg_catalog."default",
+    homepage text COLLATE pg_catalog."default",
+    id integer NOT NULL,
+    imdbid text COLLATE pg_catalog."default",
+    language text COLLATE pg_catalog."default",
+    overview text COLLATE pg_catalog."default",
+    popularity numeric,
+    posterpath text COLLATE pg_catalog."default",
+    productcompany text COLLATE pg_catalog."default",
+    productcountry text COLLATE pg_catalog."default",
+    releasedate date,
+    revenue numeric,
+    status text COLLATE pg_catalog."default",
+    title text COLLATE pg_catalog."default",
+    voteaverage numeric,
+    votecount numeric
+)

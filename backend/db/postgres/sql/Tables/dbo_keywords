@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS dbo.keywords
+(
+    id bigint,
+    keywords text COLLATE pg_catalog."default"
+)

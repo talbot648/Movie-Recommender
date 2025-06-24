@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS dbo.links
+(
+    "movieId" bigint,
+    "imdbId" bigint,
+    "tmdbId" text COLLATE pg_catalog."default"
+)

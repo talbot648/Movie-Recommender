@@ -1,0 +1,34 @@
+CREATE OR REPLACE PROCEDURE dbo.check_raw_data(
+	)
+LANGUAGE 'sql'
+AS $BODY$
+SELECT
+    CAST(adult AS boolean),
+    CAST(budget AS INT),
+    genres,
+    homepage,
+    CAST(id AS INT),
+    imdb_id,
+    original_language,
+    overview,
+    CAST(popularity AS NUMERIC),
+    poster_path,
+    production_companies,
+    production_countries,
+    CAST(release_date AS DATE),
+    CAST(revenue AS NUMERIC), 
+    status,
+    title,
+    CAST(vote_average AS NUMERIC),
+    CAST(vote_count AS INT)
+FROM dbo.movies_metadata
+WHERE
+    adult IN ('True', 'False') AND
+    budget ~ '^\d+$' AND
+    revenue ~ '^\d+(\.0+)?$' AND
+    popularity ~ '^\d*\.?\d+$' AND
+    release_date ~ '^\d{4}-\d{2}-\d{2}$' AND
+    (popularity IS NULL OR popularity::NUMERIC >= 0.0001);
+$BODY$;
+ALTER PROCEDURE dbo.check_raw_data()
+    OWNER TO postgres;
