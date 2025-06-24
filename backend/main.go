@@ -5,15 +5,17 @@ import (
 	"Movie/db/postgres" // Assuming postgres is a package that initializes the database connection
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
 )
 
 func main() {
 
-	connectionString, err := postgres.GetDBConnectionString("../scripts/config.ini") // Adjust the path to your config file as needed
-	if err != nil {
-		fmt.Println("Error getting DB connection string:", err)
+	connectionString := os.Getenv("postgresql://postgres:RwvpStzNdCGbhyffMAortwiPMyemClfF@postgres.railway.internal:5432/railway")
+	if connectionString == "" {
+		log.Fatal("DATABASE_URL is not set")
 		return
 	}
 
@@ -28,8 +30,12 @@ func main() {
 	router.HandleFunc("/api/topMovies", getTopMovies)
 	router.HandleFunc("/api/movieDetails", getMovieDetails)
 
-	fmt.Println("Server listening on port 8080")
-	err = http.ListenAndServe(":8080", CorsMiddleware(router))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	fmt.Printf("Server listening on port %s\n", port)
+	err := http.ListenAndServe(":"+port, CorsMiddleware(router))
 	if err != nil {
 		fmt.Println("Error starting server:", err)
 	}
