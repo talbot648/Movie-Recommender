@@ -48,7 +48,7 @@ func GetDBConnectionString(path string) (string, error) {
 }
 
 func GetTopMovies() ([]db.TopMovies, error) {
-	rows, err := DB.Query("SELECT film_id, film_name, average_rating, total_votes FROM top_films")
+	rows, err := DB.Query("SELECT film_id, film_name, average_rating, total_votes FROM top_movies")
 
 	if err != nil {
 		fmt.Println("failed to query the databse", err)
