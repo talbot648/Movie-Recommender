@@ -11,13 +11,13 @@ def main():
     engine = createEngine(connectionString)
     connection = establishConnection(engine)
     print(connection)
-    uploadCSVToTable('movies_metadata', 'data/movies_metadata.csv', connection,'dbo')
+    uploadCSVToTable('ratings', '../data/ratings.csv', connection,'dbo')
 
 
 
 def getConfigDetails():
     config = configparser.ConfigParser()
-    config.read('scripts/config.ini')
+    config.read('config.ini')
     postgresUsername = config.get('postgres','username')
     postgresPassword = config.get('postgres','password')
     postgresDatabase = config.get('postgres','db')

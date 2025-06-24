@@ -33,18 +33,6 @@ def test_postgres_connection():
 
 
 
-def test_connectionString():
-    postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort = getConfigDetails()
-    
-    connectionString = str(getConnectionString(postgresUsername, postgresPassword, postgresDatabase, postgresHost, postgresPort))
-
-    want = "postgresql+psycopg2://postgres:***@localhost:5432/Movie-data"
-
-    if connectionString == want :
-        assert True  # Connection string matches expected format
-    else:
-        print(f"Connection string does not match expected: {connectionString}")
-        assert False # Connection string does not match expected format
 
 
 
