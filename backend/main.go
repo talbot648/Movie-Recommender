@@ -13,7 +13,7 @@ import (
 
 func main() {
 
-	connectionString := os.Getenv("postgresql://postgres:RwvpStzNdCGbhyffMAortwiPMyemClfF@postgres.railway.internal:5432/railway")
+	connectionString := os.Getenv("DATABASE_URL")
 	if connectionString == "" {
 		log.Fatal("DATABASE_URL is not set")
 		return
