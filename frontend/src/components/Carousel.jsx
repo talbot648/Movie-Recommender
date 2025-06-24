@@ -9,10 +9,28 @@ const MovieCarousel = ({ movies }) => {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 3,      // show 3 cards at once
-    slidesToScroll: 1,    // scroll 1 card per arrow click
-    arrows: true
-    };
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
     const [selectedMovieDetails, setSelectedMovieDetails] = useState(null);
 
