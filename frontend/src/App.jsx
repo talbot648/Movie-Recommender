@@ -18,9 +18,8 @@ function AnimatedRoutes (){
       <Routes location={location} key = {location.pathname}>
         <Route path="/" element= { <PageWrapper><Home /></PageWrapper>} />
         <Route path="/About" element= { <PageWrapper><About /></PageWrapper>} />
-        <Route path="/Movies" element= { <PageWrapper><Movies /></PageWrapper>} />
         <Route path="/Recommendations" element= { <PageWrapper><Recommendations /></PageWrapper>} />
-        <Route path="/Browse" element= { <PageWrapper><Browse /></PageWrapper>} />
+        <Route path="/Browse" element= { <PageWrapper><Movies /></PageWrapper>} />
         <Route path="/Favourites" element= { <PageWrapper><Favourites /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
