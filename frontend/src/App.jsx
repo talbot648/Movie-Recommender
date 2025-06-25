@@ -6,6 +6,9 @@ import Home from "./pages/Home.jsx"
 import About from "./pages/About.jsx"
 import Movies from "./pages/Movies.jsx"
 import Navbar from "./components/Navbar.jsx"
+import Recommendations from './pages/Recommendations.jsx';
+import Browse from './pages/Browse.jsx';
+import Favourites from './pages/Favourites.jsx';
 
 function AnimatedRoutes (){
   const location = useLocation();
@@ -16,6 +19,9 @@ function AnimatedRoutes (){
         <Route path="/" element= { <PageWrapper><Home /></PageWrapper>} />
         <Route path="/About" element= { <PageWrapper><About /></PageWrapper>} />
         <Route path="/Movies" element= { <PageWrapper><Movies /></PageWrapper>} />
+        <Route path="/Recommendations" element= { <PageWrapper><Recommendations /></PageWrapper>} />
+        <Route path="/Browse" element= { <PageWrapper><Browse /></PageWrapper>} />
+        <Route path="/Favourites" element= { <PageWrapper><Favourites /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   )

@@ -1,9 +1,12 @@
 import { Outlet, NavLink } from "react-router-dom";
+import { NavDropdown } from "react-bootstrap";
 import '../css/navbar.css';
 import { useState } from "react";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+    
   return (
     <>
       <nav className="navbar navbar-expand-lg">
@@ -23,9 +26,13 @@ const Navbar = () => {
               <li className="nav-item">
                 <NavLink className="nav-link" to="/About">About</NavLink>
               </li>
+              <NavDropdown title="Movies">
                <li className="nav-item">
-                <NavLink className="nav-link" to="/Movies">Movies</NavLink>
+                <NavDropdown.Item><NavLink className="Nav-link" to="/Recommendations">Recommendations</NavLink></NavDropdown.Item>
+                <NavDropdown.Item><NavLink className="Nav-link" to="/Browse">Browse All</NavLink></NavDropdown.Item>
+                <NavDropdown.Item><NavLink className="Nav-link" to="/Favourites">Favourites</NavLink></NavDropdown.Item>
               </li>
+              </NavDropdown>
             </ul>
             
           </div>
