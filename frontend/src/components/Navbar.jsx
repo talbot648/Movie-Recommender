@@ -29,7 +29,7 @@ const Navbar = () => {
               <NavDropdown title="Movies">
                <li className="nav-item">
                 <NavDropdown.Item><NavLink className="Nav-link" to="/Recommendations">Recommendations</NavLink></NavDropdown.Item>
-                <NavDropdown.Item><NavLink className="Nav-link" to="/Browse">Browse All</NavLink></NavDropdown.Item>
+                <NavDropdown.Item><NavLink className="Nav-link" to="/Movies">Browse All</NavLink></NavDropdown.Item>
                 <NavDropdown.Item><NavLink className="Nav-link" to="/Favourites">Favourites</NavLink></NavDropdown.Item>
               </li>
               </NavDropdown>
