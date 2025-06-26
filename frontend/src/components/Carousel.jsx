@@ -36,7 +36,7 @@ const MovieCarousel = ({ movies }) => {
 
     const handleShowModal = async (movie) => {
         try {
-            const response = await fetch (`https://movie-recommender-production-f8dc.up.railway.app/api/movieDetails?id=${movie.Filmid}`);
+            const response = await fetch (`http://localhost:8080/api/movieDetails?id=${movie.Filmid}`);
 
             if (!response.ok){
                 throw new Error('Failed to fetch data') 

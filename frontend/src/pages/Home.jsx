@@ -16,7 +16,7 @@ const Home = () => {
     const fetchTopMovies = async () => {
         try {
             
-            const response = await fetch("https://movie-recommender-production-f8dc.up.railway.app/api/topMovies");
+            const response = await fetch("api/topMovies");
         
         if (!response.ok){
             throw new Error('Failed to fetch data')
