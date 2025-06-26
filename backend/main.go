@@ -13,9 +13,9 @@ import (
 
 func main() {
 
-	connectionString := os.Getenv("DATABASE_URL")
-	if connectionString == "" {
-		log.Fatal("DATABASE_URL is not set")
+	connectionString, err := postgres.GetDBConnectionString("../scripts/config.ini")
+	if err != nil {
+		log.Fatal("Error getting connection string")
 		return
 	}
 	if err := postgres.InitDB(connectionString); err != nil {
@@ -34,7 +34,7 @@ func main() {
 		port = "8080"
 	}
 	fmt.Printf("Server listening on port %s\n", port)
-	err := http.ListenAndServe(":"+port, CorsMiddleware(router))
+	err = http.ListenAndServe(":"+port, CorsMiddleware(router))
 	if err != nil {
 		fmt.Println("Error starting server:", err)
 	}
@@ -68,20 +68,7 @@ func getTopMovies(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	topMoviesJSON, errMarshal := json.Marshal(topMovies)
-	if errMarshal != nil {
-		http.Error(writer, "Internal Server Error", http.StatusInternalServerError)
-		return
-
-	}
-
-	writer.Header().Set("Content-Type", "application/json")
-
-	_, err := writer.Write([]byte(topMoviesJSON))
-	if err != nil {
-		http.Error(writer, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
+	json.NewEncoder(writer).Encode(topMovies)
 
 }
 
