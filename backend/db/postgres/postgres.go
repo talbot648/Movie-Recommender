@@ -67,6 +67,7 @@ func GetTopMovies() ([]model.TopMovies, error) {
 		}
 		topMovies = append(topMovies, movie)
 	}
+
 	return topMovies, nil
 }
 

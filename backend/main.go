@@ -2,9 +2,7 @@ package main
 
 import (
 	"Movie/api"
-	"Movie/db"
 	"Movie/db/postgres"
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -52,24 +50,4 @@ func main() {
 		fmt.Println("Error starting server:", err)
 	}
 
-}
-
-func getTopMovies(writer http.ResponseWriter, request *http.Request) {
-	topMovies := db.GetTopMovies()
-
-	topMoviesJSON, errMarshal := json.Marshal(topMovies)
-	if errMarshal != nil {
-		// Handle error if marshalling fails
-		http.Error(writer, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
-
-	writer.Header().Set("Content-Type", "application/json")
-
-	_, err := writer.Write([]byte(topMoviesJSON))
-	if err != nil {
-		// Handle error if writing response fails
-		http.Error(writer, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
 }

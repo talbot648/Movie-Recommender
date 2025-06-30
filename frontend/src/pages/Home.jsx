@@ -32,6 +32,7 @@ const Home = () => {
     fetchTopMovies();
     },[]);
 
+console.log("Movies state in Home:", Movies);
 
 return (
 <>
@@ -41,7 +42,7 @@ return (
 <p>Discover movies you love with the use of this recommendation tool! </p>
 </div>
 </div>
-<div className="grid-container">
+<div className="grid-container box">
  <InfoBox
     title = "About"
     description = "We recommend you movies based on your prerences and ratings."
