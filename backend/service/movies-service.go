@@ -1,23 +1,23 @@
 package service
 
 import (
-	"Movie/db"
 	"Movie/db/postgres"
+	"Movie/model"
 	"errors"
 	"fmt"
 )
 
-func GetTopMovies() ([]db.TopMovies, error) {
-	TopMovies, err := postgres.GetTopMovies()
+func GetTopMovies() ([]model.TopMovies, error) {
+	topMovies, err := postgres.GetTopMovies()
 
 	if err != nil {
 		fmt.Println("Error getting top movies from DB", err)
 		return nil, errors.New("There was an error getting the users from the database")
 	}
-	return TopMovies, nil
+	return topMovies, nil
 }
 
-func GetMovieDetails(id int) (db.MovieDetails, error) {
+func GetMovieDetails(id int) (model.MovieDetails, error) {
 	movieDetails, err := postgres.GetMovieDetails(id)
 
 	if err != nil {

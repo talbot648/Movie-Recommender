@@ -1,7 +1,8 @@
 package postgres
 
 import (
-	"Movie/db" // Assuming db is the package where TopMovies struct is defined
+	// Assuming db is the package where TopMovies struct is defined
+	"Movie/model"
 	"database/sql"
 	"errors"
 	"fmt"
@@ -47,30 +48,30 @@ func GetDBConnectionString(path string) (string, error) {
 	return connectionString, nil
 }
 
-func GetTopMovies() ([]db.TopMovies, error) {
+func GetTopMovies() ([]model.TopMovies, error) {
 	rows, err := DB.Query("SELECT film_id, film_name, average_rating, total_votes FROM top_movies")
 
 	if err != nil {
 		fmt.Println("failed to query the databse", err)
-		return []db.TopMovies{}, errors.New("Database could not be queried")
+		return []model.TopMovies{}, errors.New("Database could not be queried")
 	}
 	defer rows.Close()
 
-	topMovies := []db.TopMovies{}
+	topMovies := []model.TopMovies{}
 
 	for rows.Next() {
-		var movie db.TopMovies
+		var movie model.TopMovies
 		if err := rows.Scan(&movie.Filmid, &movie.FilmName, &movie.AverageRating, &movie.TotalVotes); err != nil {
 			fmt.Println("failed to scan row", err)
-			return []db.TopMovies{}, errors.New("Database could not be queried")
+			return []model.TopMovies{}, errors.New("Database could not be queried")
 		}
 		topMovies = append(topMovies, movie)
 	}
 	return topMovies, nil
 }
 
-func GetMovieDetails(id int) (db.MovieDetails, error) {
-	var movie db.MovieDetails
+func GetMovieDetails(id int) (model.MovieDetails, error) {
+	var movie model.MovieDetails
 	row := DB.QueryRow(`SELECT id, title, Adult, genres, language, overview, releasedate, voteaverage, votecount
       FROM cl.movies_metadata
       WHERE id = $1`, id)
