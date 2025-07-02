@@ -2,7 +2,9 @@ package main
 
 import (
 	"Movie/api"
+	"Movie/db"
 	"Movie/db/postgres"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -36,9 +38,10 @@ func main() {
 
 	router := http.NewServeMux()
 
-	router.HandleFunc("/", rootHandler)
-	router.HandleFunc("/api/topMovies", api.GetTopMovies)
-	router.HandleFunc("/api/movieDetails/{id}", api.GetMovieDetails)
+	router.HandleFunc("GET /", rootHandler)
+	router.HandleFunc("GET /api/topMovies", api.GetTopMovies)
+	router.HandleFunc("GET /api/movieDetails/{id}", api.GetMovieDetails)
+	router.HandleFunc("GET /api/users", getUsers)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -49,5 +52,13 @@ func main() {
 	if err != nil {
 		fmt.Println("Error starting server:", err)
 	}
+
+}
+
+func getUsers(writer http.ResponseWriter, request *http.Request) {
+	fmt.Printf("got /api/users request\n")
+	users := db.GetUsers()
+
+	json.NewEncoder(writer).Encode(users)
 
 }

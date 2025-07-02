@@ -3,8 +3,20 @@
 .about-background{
     height: 100vh;
     width: 100%;
-    background-image: url("../../public/about-us.jpg");
+    background: linear-gradient(to bottom, #f5f3ef, #fcc5c5);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+.about-background h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    padding-top: 200px;
+    color: #1a1a1a;
+}
+
+.about-background p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #1a1a1a;
 }
