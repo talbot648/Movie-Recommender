@@ -39,10 +39,12 @@ func main() {
 
 	router := http.NewServeMux()
 
-	router.HandleFunc("/", rootHandler)
+	router.HandleFunc("GET /", rootHandler)
 	router.HandleFunc("GET /api/topMovies", api.GetTopMovies)
 	router.HandleFunc("GET /api/movieDetails/{id}", api.GetMovieDetails)
-	router.HandleFunc("/api/users", handleUsers)
+
+	router.HandleFunc("GET /api/users", getUsers)
+	router.HandleFunc("/api/users", createUser)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -56,26 +58,29 @@ func main() {
 
 }
 
-func handleUsers(writer http.ResponseWriter, request *http.Request) {
-	if request.Method == http.MethodPost {
-		var user model.User
-		err := json.NewDecoder(request.Body).Decode(&user)
-		if err != nil {
-			fmt.Println("Error decoding user:", err)
-			http.Error(writer, "Bad request", http.StatusBadRequest)
-			return
-		}
-		id := db.AddUser(user)
-		user.ID = id
-		writer.Header().Set("Content-Type", "application/json")
-		writer.WriteHeader(http.StatusCreated)
-		json.NewEncoder(writer).Encode(user)
-
-		return
-	}
+func getUsers(writer http.ResponseWriter, request *http.Request) {
 	fmt.Printf("got /api/users request\n")
 	users := db.GetUsers()
 
 	json.NewEncoder(writer).Encode(users)
 
+}
+
+func createUser(writer http.ResponseWriter, request *http.Request) {
+	var user model.User
+	fmt.Printf("got /api/users post request\n")
+
+	err := json.NewDecoder(request.Body).Decode(&user)
+	if err != nil {
+		fmt.Println("Error decoding user:", err)
+		http.Error(writer, "Bad request", http.StatusBadRequest)
+		return
+	}
+	id := db.AddUser(user)
+	user.ID = id
+	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusCreated)
+	json.NewEncoder(writer).Encode(user)
+
+	return
 }

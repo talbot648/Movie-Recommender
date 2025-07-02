@@ -22,7 +22,7 @@ func TestGetUsersHandler(t *testing.T) {
 	rr := httptest.NewRecorder()
 
 	// Create a handler
-	handler := http.HandlerFunc(handleUsers)
+	handler := http.HandlerFunc(getUsers)
 
 	expected := []model.User{
 		{
@@ -74,7 +74,7 @@ func TestCreateUserHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(handleUsers)
+	handler := http.HandlerFunc(createUser)
 
 	handler.ServeHTTP(rr, req)
 
