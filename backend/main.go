@@ -4,6 +4,7 @@ import (
 	"Movie/api"
 	"Movie/db"
 	"Movie/db/postgres"
+	"Movie/model"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -38,10 +39,10 @@ func main() {
 
 	router := http.NewServeMux()
 
-	router.HandleFunc("GET /", rootHandler)
+	router.HandleFunc("/", rootHandler)
 	router.HandleFunc("GET /api/topMovies", api.GetTopMovies)
 	router.HandleFunc("GET /api/movieDetails/{id}", api.GetMovieDetails)
-	router.HandleFunc("GET /api/users", getUsers)
+	router.HandleFunc("/api/users", handleUsers)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -55,7 +56,23 @@ func main() {
 
 }
 
-func getUsers(writer http.ResponseWriter, request *http.Request) {
+func handleUsers(writer http.ResponseWriter, request *http.Request) {
+	if request.Method == http.MethodPost {
+		var user model.User
+		err := json.NewDecoder(request.Body).Decode(&user)
+		if err != nil {
+			fmt.Println("Error decoding user:", err)
+			http.Error(writer, "Bad request", http.StatusBadRequest)
+			return
+		}
+		id := db.AddUser(user)
+		user.ID = id
+		writer.Header().Set("Content-Type", "application/json")
+		writer.WriteHeader(http.StatusCreated)
+		json.NewEncoder(writer).Encode(user)
+
+		return
+	}
 	fmt.Printf("got /api/users request\n")
 	users := db.GetUsers()
 

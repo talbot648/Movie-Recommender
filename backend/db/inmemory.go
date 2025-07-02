@@ -4,6 +4,7 @@ import "Movie/model"
 
 var topMovies []model.TopMovies
 var users []model.User
+var count int = 2
 
 func init() {
 	topMovies = []model.TopMovies{
@@ -23,4 +24,11 @@ func GetTopMovies() []model.TopMovies {
 
 func GetUsers() []model.User {
 	return users
+}
+
+func AddUser(user model.User) (id int) {
+	count++
+	user.ID = count
+	users = append(users, user)
+	return count
 }

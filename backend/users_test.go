@@ -2,6 +2,7 @@ package main
 
 import (
 	"Movie/model"
+	"bytes"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -21,7 +22,7 @@ func TestGetUsersHandler(t *testing.T) {
 	rr := httptest.NewRecorder()
 
 	// Create a handler
-	handler := http.HandlerFunc(getUsers)
+	handler := http.HandlerFunc(handleUsers)
 
 	expected := []model.User{
 		{
@@ -53,4 +54,40 @@ func TestGetUsersHandler(t *testing.T) {
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("handler returned unexpected body: got %v want %v", actual, expected)
 	}
+}
+
+func TestCreateUserHandler(t *testing.T) {
+	// ARRANGE
+	// Create a new HTTP request with a JSON body
+	expected := model.User{
+		ID:       3,
+		Username: "NewUser",
+		Password: "NewPassword",
+	}
+	body, err := json.Marshal(expected)
+	if err != nil {
+		t.Fatalf("Failed to marshal user: %v", err)
+	}
+
+	req, err := http.NewRequest("POST", "/api/users", bytes.NewBuffer(body))
+	if err != nil {
+		t.Fatal(err)
+	}
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(handleUsers)
+
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusCreated {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusCreated)
+	}
+	var actual model.User
+	if err := json.Unmarshal(rr.Body.Bytes(), &actual); err != nil {
+		t.Fatalf("Failed to unmarshal response body: %v", err)
+	}
+
+	if expected.ID != actual.ID || expected.Username != actual.Username || expected.Password != actual.Password {
+		t.Errorf("handler returned unexpected body: got %v want %v", actual, expected)
+	}
+
 }
